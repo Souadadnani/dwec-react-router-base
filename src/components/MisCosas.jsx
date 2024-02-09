@@ -1,22 +1,26 @@
 import { useEffect, useState } from "react";
+import { getCosas } from "../services/cosas.service";
 
 export default function MisCosas() {
   const [cosas, setCosas] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
-    fetch("http://localhost:8080/api/cosas", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setCosas(data);
-        console.log(data);
-      });
+    getCosas(token, setCosas);
   }, []);
 
-  return <h1>Mis cosas</h1>;
+  return (
+    <div>
+      <h1>Mis cosas</h1>
+      
+          {cosas.map((cosa, index)=>{
+            <ul key={index}>  
+                 <li>{cosa.nombre}</li>
+            </ul>            
+          })}
+      
+     
+    </div>
+  )
+
 }

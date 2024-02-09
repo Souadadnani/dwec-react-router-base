@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { addCosaNueva } from "../services/cosas.service";
 
 export default function CosaNueva() {
   const [nombre, setNombre] = useState("");
@@ -6,18 +7,7 @@ export default function CosaNueva() {
   const doSave = (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    fetch("http://localhost:8080/api/cosas", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ nombre }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        alert(data);
-      });
+    addCosaNueva(token, nombre);
   };
 
   return (
